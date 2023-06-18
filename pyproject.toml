@@ -4,8 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["dengxiaojun <dxj1718874198@gmail.com>"]
 
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+
 [tool.poetry.dependencies]
 python = "^3.6"
+PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
