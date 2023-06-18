@@ -1,5 +1,4 @@
 import os
-import string
 import sys
 
 
@@ -7,7 +6,7 @@ class FileUtil:
 
     @staticmethod
     def appDir(is_prod):
-        launch_path: string = os.path.realpath(sys.argv[0])
+        launch_path = os.path.realpath(sys.argv[0])
         app_dir = os.path.dirname(launch_path)
         if is_prod:
             return app_dir
