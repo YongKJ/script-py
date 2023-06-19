@@ -82,7 +82,7 @@ class Demo:
         # match = pattern.findall(content)
         # match = pattern.match(content)
         # match = pattern.search(content)
-        # LogUtil.loggerLine(Log.of("GenUtil", "test8", "match", match))
+        LogUtil.loggerLine(Log.of("GenUtil", "test8", "all", pattern.findall(content)))
 
     @staticmethod
     def run():
