@@ -22,15 +22,14 @@ class GenUtil:
         index = path.rfind(os.path.sep) + 1
         name = path[index:].replace(".py", ".yaml")
         config = GenUtil.getConfigPath(GenUtil.toLine(name))
-        with open(config, mode="w", encoding="utf-8") as f:
-            yaml.dump(data, f, allow_unicode=True)
+        func = lambda f: yaml.dump(data, f, allow_unicode=True)
+        FileUtil.writeFile(config, func)
 
     @staticmethod
     def getConfig(config):
+        func = lambda s: yaml.load(s, Loader=yaml.FullLoader)
         path = GenUtil.getConfigPath(config)
-        with open(path, mode="r", encoding="utf-8") as f:
-            data = yaml.load(f.read(), Loader=yaml.FullLoader)
-        return data
+        return FileUtil.readFile(path, func)
 
     @staticmethod
     def getConfigPath(config):

@@ -22,3 +22,14 @@ class FileUtil:
     @staticmethod
     def exist(fileName):
         return os.path.exists(fileName)
+
+    @staticmethod
+    def readFile(path, taskFunc):
+        with open(path, mode="r", encoding="utf-8") as f:
+            data = taskFunc(f.read())
+        return data
+
+    @staticmethod
+    def writeFile(path, taskFunc):
+        with open(path, mode="w", encoding="utf-8") as f:
+            taskFunc(f)
