@@ -75,7 +75,7 @@ class Demo:
 
     def test8(self):
         path = "D:\\Document\\MyCodes\\Github\\script-py\\src\\script_py\\applet\\demo\\Demo.py"
-        pattern = re.compile("from.*import\\s(\\S+)")
+        pattern = re.compile("from\\s(\\S+)\\simport.*")
         content = FileUtil.read(path)
         for match in pattern.finditer(content):
             LogUtil.loggerLine(Log.of("GenUtil", "test8", "match.group(1)", match.group(1)))
