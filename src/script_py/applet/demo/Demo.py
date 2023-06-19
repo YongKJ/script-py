@@ -69,7 +69,8 @@ class Demo:
         regStr = "(\r\n\\s+<dependency>[\\s\\S]*?</dependency>)"
         path = "D:\Document\MyCodes\Github\script-java\pom.xml"
         value = "\r\n        <dependency>\r\n            <groupId>org.apache.httpcomponents</groupId>\r\n            <artifactId>httpclient</artifactId>\r\n            <version>4.5.49</version>\r\n        </dependency>"
-        FileUtil.modFile(path, regStr, value, True)
+        FileUtil.modFile(path, regStr, value)
+        # FileUtil.modFile(path, regStr, value, True)
 
     @staticmethod
     def run():
