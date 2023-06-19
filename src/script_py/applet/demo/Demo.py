@@ -1,3 +1,4 @@
+import re
 import os
 import sys
 
@@ -72,10 +73,22 @@ class Demo:
         FileUtil.modFile(path, regStr, value)
         # FileUtil.modFile(path, regStr, value, True)
 
+    def test8(self):
+        path = "D:\\Document\\MyCodes\\Github\\script-py\\src\\script_py\\applet\\demo\\Demo.py"
+        pattern = re.compile("from.*import\\s(\\S+)")
+        content = FileUtil.read(path)
+        for match in pattern.finditer(content):
+            LogUtil.loggerLine(Log.of("GenUtil", "test8", "match.group(1)", match.group(1)))
+        # match = pattern.findall(content)
+        # match = pattern.match(content)
+        # match = pattern.search(content)
+        # LogUtil.loggerLine(Log.of("GenUtil", "test8", "match", match))
+
     @staticmethod
     def run():
         demo = Demo()
-        demo.test7()
+        demo.test8()
+        # demo.test7()
         # demo.test6()
         # demo.test5()
         # demo.test4()
