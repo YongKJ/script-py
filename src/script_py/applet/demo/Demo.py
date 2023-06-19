@@ -52,10 +52,33 @@ class Demo:
         LogUtil.loggerLine(Log.of("GenUtil", "getValue", "__name__", sys._getframe().f_back.f_code.__class__.__name__))
         LogUtil.loggerLine(Log.of("GenUtil", "getValue", "dir", dir(sys._getframe().f_back.f_code)))
 
+    def test5(self):
+        # path = "D:\\Document\\MyCodes\\Github\\script-py\\src\\script_py"
+        path = FileUtil.getAbsPath(False, "src", "script_py")
+        lstFile = FileUtil.list(path)
+        for file in lstFile:
+            print(file)
+        LogUtil.loggerLine(Log.of("GenUtil", "getValue", "lstFile", lstFile))
+        LogUtil.loggerLine(Log.of("GenUtil", "getValue", "type", type(lstFile)))
+
+    def test6(self):
+        path = FileUtil.getAbsPath(False, "pyproject.toml")
+        FileUtil.modContent(path, "authors = (.*)", "YongKJ")
+
+    def test7(self):
+        regStr = "(\r\n\\s+<dependency>[\\s\\S]*?</dependency>)"
+        path = "D:\Document\MyCodes\Github\script-java\pom.xml"
+        value = "\r\n        <dependency>\r\n            <groupId>org.apache.httpcomponents</groupId>\r\n            <artifactId>httpclient</artifactId>\r\n            <version>4.5.49</version>\r\n        </dependency>"
+        FileUtil.modFile(path, regStr, value, True)
+
     @staticmethod
     def run():
         demo = Demo()
+        demo.test7()
+        # demo.test6()
+        # demo.test5()
+        # demo.test4()
         # demo.test3()
         # demo.test2()
         # demo.test1()
-        demo.test()
+        # demo.test()

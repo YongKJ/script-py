@@ -27,9 +27,8 @@ class GenUtil:
 
     @staticmethod
     def getConfig(config):
-        func = lambda s: yaml.load(s, Loader=yaml.FullLoader)
         path = GenUtil.getConfigPath(config)
-        return FileUtil.readFile(path, func)
+        return yaml.load(FileUtil.read(path), Loader=yaml.FullLoader)
 
     @staticmethod
     def getConfigPath(config):
