@@ -1,11 +1,8 @@
 from .deploy.service.BuildScriptService import BuildScriptService
 
-from .applet.demo.Demo import Demo
 
-
-class ApplicationTest:
+class Application:
 
     @staticmethod
     def run():
-        # Demo.run()
         BuildScriptService.run()

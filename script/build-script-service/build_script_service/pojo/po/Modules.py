@@ -1,0 +1,2 @@
+class Modules:
+    yaml = "PyYAML"
