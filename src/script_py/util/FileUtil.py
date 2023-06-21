@@ -1,17 +1,30 @@
 import re
 import os
 import sys
+import shutil
 
 
 class FileUtil:
 
     @staticmethod
-    def appDir(is_prod):
-        launch_path = os.path.realpath(sys.argv[0])
-        app_dir = os.path.dirname(launch_path)
+    def appDir(is_prod=False):
+        launch_path = FileUtil.dirname(__file__)
+        app_dir = FileUtil.dirname(launch_path)
         if is_prod:
-            return app_dir
-        return os.path.dirname(app_dir)
+            if "site-packages" not in app_dir:
+                return app_dir
+            else:
+                return FileUtil.dirname(app_dir)
+        app_dir = FileUtil.dirname(app_dir)
+        return FileUtil.dirname(app_dir)
+
+    @staticmethod
+    def hasYaml(appDir):
+        files = FileUtil.list(appDir)
+        for file in files:
+            if ".yaml" in file:
+                return True
+        return False
 
     @staticmethod
     def getAbsPath(is_prod, *names):
@@ -21,8 +34,49 @@ class FileUtil:
         return path
 
     @staticmethod
+    def create(fileName):
+        file = open(fileName, "w")
+        file.close()
+
+    @staticmethod
+    def mkdir(fileName):
+        if FileUtil.exist(fileName): return
+        os.makedirs(fileName, exist_ok=True)
+
+    @staticmethod
+    def copy(srcFileName, desFileName):
+        if FileUtil.isFolder(srcFileName):
+            shutil.copytree(srcFileName, desFileName)
+        else:
+            shutil.copyfile(srcFileName, desFileName)
+
+    @staticmethod
+    def move(srcFileName, desFileName):
+        shutil.move(srcFileName, desFileName)
+
+    @staticmethod
+    def rename(srcFileName, desFileName):
+        os.rename(srcFileName, desFileName)
+
+    @staticmethod
+    def delete(fileName):
+        if not FileUtil.exist(fileName): return
+        if FileUtil.isFolder(fileName):
+            shutil.rmtree(fileName)
+        else:
+            os.remove(fileName)
+
+    @staticmethod
+    def dirname(path):
+        return os.path.dirname(path)
+
+    @staticmethod
     def list(fileName):
         return os.listdir(fileName)
+
+    @staticmethod
+    def isFile(fileName):
+        return os.path.isfile(fileName)
 
     @staticmethod
     def isFolder(fileName):
@@ -34,9 +88,13 @@ class FileUtil:
 
     @staticmethod
     def read(fileName):
-        line_break = "\r\n" if sys.platform.startswith("win") else "\n"
-        with open(fileName, mode="r", encoding="utf-8", newline=line_break) as f:
-            return f.read()
+        try:
+            line_break = "\r\n" if sys.platform.startswith("win") else "\n"
+            with open(fileName, mode="r", encoding="utf-8", newline=line_break) as f:
+                return f.read()
+        except Exception as e:
+            print(fileName)
+            print(e)
 
     @staticmethod
     def write(fileName, content, conver=True):
@@ -64,7 +122,7 @@ class FileUtil:
     @staticmethod
     def modify(path, regStr, valueFunc, isAll=False):
         content = FileUtil.read(path)
-        sep = "\r\n" if "\r\n" in path else "\n"
+        sep = "\r\n" if "\r\n" in content else "\n"
         contentArray = content.split(sep)
         pattern = re.compile(regStr)
         for line in contentArray:

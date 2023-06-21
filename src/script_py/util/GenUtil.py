@@ -44,3 +44,25 @@ class GenUtil:
     @staticmethod
     def toHump(name):
         return name[0:1].upper() + re.sub("-(\\w)", lambda m: m.group(1).upper(), name[1:])
+
+    @staticmethod
+    def has(list, e):
+        for l in list:
+            if e in l: return True
+        return False
+
+    @staticmethod
+    def println(string=""):
+        print(string)
+
+    @staticmethod
+    def print(string):
+        print(string, end="")
+
+    @staticmethod
+    def strToList(line):
+        return line.split(" ")
+
+    @staticmethod
+    def readParams(tips):
+        return GenUtil.strToList(input(tips))
