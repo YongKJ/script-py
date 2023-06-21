@@ -64,5 +64,5 @@ class GenUtil:
         return line.split(" ")
 
     @staticmethod
-    def readParams(tips):
-        return GenUtil.strToList(input(tips))
+    def readParams():
+        return GenUtil.strToList(input())

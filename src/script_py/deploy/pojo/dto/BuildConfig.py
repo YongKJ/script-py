@@ -50,9 +50,9 @@ class BuildConfig:
             tomlPath, projectPath, scriptPath,
             targetPath, launchPath, launchContent, applicationPath,
             "(\\[tool.poetry.dependencies\\][\\s\\S]+?\r\n\r\n)", "",
-            "name\\s=\\s\"(\\S+)\"", "script-py", "(\\S+\\s=\\s\"script_py\\S+\")",
-            "script - py = \"script_py.Application:Application.run\"", "\\s+(\\S+)\\.run\\(\\)",
-            "Demo", "(from[\\s\\S]+Demo)", "from .applet.demo.Demo import Demo"
+            "name\\s=\\s\"(\\S+)\"", "script-py", "(\\S+\\s=\\s\"\\S+run\")",
+            "script-py = \"script_py.Application:Application.run\"", "\\s+(\\S+)\\.run\\(\\)",
+            "Demo", "(from[\\s\\S]+import[\\s\\S]+)", "from .applet.demo.Demo import Demo"
         )
         BuildConfig.analyzeTomlDependencies(config)
         return config

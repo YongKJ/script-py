@@ -6,7 +6,7 @@ from ....util.GenUtil import GenUtil
 class Script:
     dictCodes = SourceCode.get()
 
-    def __init__(self, pyName="", className="", packageName="", projectName="", srcName="", scriptProjectName="",
+    def __init__(self, pyName="", className="", packageName="", projectName="", lineProjectName="", scriptProjectName="",
                  targetProjectName="", targetLaunchPath="", targetTomlPath="", targetBuildPath="", targetConfigPath="",
                  targetDistPath="", pyPath="", yamlConfig="", scriptConfig="", scriptPath="", consoleScripts="",
                  codePaths=set(), modules=set()):
@@ -15,7 +15,7 @@ class Script:
         self._className = className
         self._packageName = packageName
         self._projectName = projectName
-        self._srcName = srcName
+        self._lineProjectName = lineProjectName
         self._scriptProjectName = scriptProjectName
         self._targetProjectName = targetProjectName
         self._targetConfigPath = targetConfigPath
@@ -31,10 +31,10 @@ class Script:
         self._modules = modules
 
     @staticmethod
-    def of(pyName, className, packageName, projectName, srcName, scriptProjectName, targetProjectName, targetLaunchPath,
+    def of(pyName, className, packageName, projectName, lineProjectName, scriptProjectName, targetProjectName, targetLaunchPath,
            targetTomlPath, targetBuildPath, targetConfigPath, targetDistPath, pyPath, yamlConfig, scriptConfig,
            scriptPath, consoleScripts, codePaths, modules):
-        return Script(pyName, className, packageName, projectName, srcName, scriptProjectName, targetProjectName,
+        return Script(pyName, className, packageName, projectName, lineProjectName, scriptProjectName, targetProjectName,
                       targetLaunchPath, targetTomlPath, targetBuildPath, targetConfigPath, targetDistPath, pyPath,
                       yamlConfig, scriptConfig, scriptPath, consoleScripts, codePaths, modules)
 
@@ -66,7 +66,7 @@ class Script:
             scriptName = GenUtil.toLine(pyName)
             className = pyName.replace(".py", "")
             projectName = GenUtil.toLine(className)
-            srcName = projectName.replace("-", "_")
+            lineProjectName = projectName.replace("-", "_")
             yamlName = yamlName.replace(".py", ".yaml")
             yamlConfig = assetsDir + sep + yamlName
             scriptConfig = scriptDir + sep + yamlName
@@ -74,20 +74,19 @@ class Script:
             consoleScripts = Script.getConsoleScripts(className)
             packageName = Script.getPackageName(pyPath, className)
             targetBuildPath = targetDir + sep + projectName
-            scriptProjectName = scriptDir + sep + projectName
-            targetProjectName = targetDir + sep + projectName + sep + "src" + sep + srcName
+            scriptProjectName = scriptDir + sep + lineProjectName
+            targetProjectName = targetDir + sep + projectName + sep + "src" + sep + lineProjectName
             targetLaunchPath = FileUtil.dirname(targetProjectName) + sep + scriptName
             targetTomlPath = targetDir + sep + projectName + sep + "pyproject.toml"
             targetDistPath = targetProjectName + sep + projectName + sep + "dist"
             targetConfigPath = targetProjectName + sep + yamlName
-            codePaths = {FileUtil.getAbsPath(False, "src", "script-py.py"),
-                         FileUtil.getAbsPath(False, "src", "script_py", "Application.py")}
+            codePaths = {FileUtil.getAbsPath(False, "src", "script_py", "Application.py")}
             code = Script.dictCodes[pyPath]
             codePaths.add(code.path)
             modules.update(code.externalModules)
             Script.analyzeCode(Script.dictCodes[pyPath], set(), codePaths, modules)
             lstScript.append(
-                Script.of(pyName, className, packageName, projectName, srcName, scriptProjectName, targetProjectName,
+                Script.of(pyName, className, packageName, projectName, lineProjectName, scriptProjectName, targetProjectName,
                           targetLaunchPath, targetTomlPath, targetBuildPath, targetConfigPath, targetDistPath, pyPath,
                           yamlConfig, scriptConfig, scriptPath, consoleScripts, codePaths, modules))
         return lstScript
@@ -204,12 +203,12 @@ class Script:
         self._targetProjectName = value
 
     @property
-    def srcName(self):
-        return self._srcName
+    def lineProjectName(self):
+        return self._lineProjectName
 
-    @srcName.setter
-    def srcName(self, value):
-        self._srcName = value
+    @lineProjectName.setter
+    def lineProjectName(self, value):
+        self._lineProjectName = value
 
     @property
     def projectName(self):

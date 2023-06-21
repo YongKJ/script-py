@@ -1,11 +1,9 @@
 from ..pojo.po.Script import Script
 from ...deploy.pojo.dto.BuildConfig import BuildConfig
 from ...deploy.pojo.po.Dependency import Dependency
-from ...pojo.dto.Log import Log
 from ...util.CmdUtil import CmdUtil
 from ...util.FileUtil import FileUtil
 from ...util.GenUtil import GenUtil
-from ...util.LogUtil import LogUtil
 from ...util.RemoteUtil import RemoteUtil
 
 
@@ -22,8 +20,8 @@ class BuildScriptService:
         for i in range(len(self.scripts)):
             GenUtil.println(str(i + 1) + ". " + self.scripts[i].pyName)
         GenUtil.println(str(len(self.scripts) + 1) + ". update script dependencies")
-        tips = "Please enter one or more numbers corresponding to the script: "
-        nums = GenUtil.readParams(tips)
+        GenUtil.print("Please enter one or more numbers corresponding to the script: ")
+        nums = GenUtil.readParams()
         if len(nums) == 0: return
         GenUtil.println()
 
@@ -35,8 +33,6 @@ class BuildScriptService:
                 buildCmd = CmdUtil.updateScriptDependencies()
                 RemoteUtil.changeWorkFolder(FileUtil.appDir())
                 RemoteUtil.execLocalCmd(buildCmd)
-
-        LogUtil.loggerLine(Log.of("BuildScriptService", "apply", "nums", nums))
 
     def build(self, script):
         self.changeBuildConfig(script, True)
@@ -52,7 +48,8 @@ class BuildScriptService:
     def updateScript(self, script):
         BuildConfig.updateScript(script.targetProjectName, self.buildConfig, script)
         FileUtil.copy(script.targetLaunchPath, script.scriptPath)
-        FileUtil.copy(script.yamlConfig, script.scriptConfig)
+        if FileUtil.exist(script.yamlConfig):
+            FileUtil.copy(script.yamlConfig, script.scriptConfig)
         if script.className != BuildScriptService.__name__:
             self.updateScriptPackage(script)
 
@@ -93,7 +90,7 @@ class BuildScriptService:
             FileUtil.write(self.buildConfig.launchPath, self.buildConfig.launchContent)
             return
         FileUtil.modFile(self.buildConfig.launchPath, "(\r\n.*ApplicationTest.*)\r", "", True)
-        FileUtil.modFile(self.buildConfig.launchPath, "(script_py)", script.srcName)
+        FileUtil.modFile(self.buildConfig.launchPath, "(script_py)", script.lineProjectName)
         FileUtil.modFile(self.buildConfig.launchPath, "(#\\s)", "")
 
     def changeTargetProject(self, script):
@@ -106,7 +103,8 @@ class BuildScriptService:
             FileUtil.mkdir(FileUtil.dirname(desCodePath))
             FileUtil.copy(codePath, desCodePath)
         Script.fillTargetInitFile(script.targetProjectName)
-        FileUtil.copy(script.yamlConfig, script.targetConfigPath)
+        if FileUtil.exist(script.yamlConfig):
+            FileUtil.copy(script.yamlConfig, script.targetConfigPath)
         FileUtil.copy(self.buildConfig.tomlPath, script.targetTomlPath)
         FileUtil.copy(self.buildConfig.launchPath, script.targetLaunchPath)
 
