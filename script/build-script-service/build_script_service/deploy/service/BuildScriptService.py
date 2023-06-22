@@ -47,14 +47,15 @@ class BuildScriptService:
 
     def updateScript(self, script):
         FileUtil.delete(script.scriptProjectName)
-        BuildConfig.updateScript(script.targetLineProjectName, self.buildConfig, script)
+        BuildConfig.updateScript(script.targetLineProjectName, script)
         FileUtil.copy(self.buildConfig.launchPath, script.scriptPath)
         if FileUtil.exist(script.yamlConfig):
             FileUtil.copy(script.yamlConfig, script.scriptConfig)
         if script.className != BuildScriptService.__name__:
-            self.updateScriptPackage(script)
+            BuildScriptService.updateScriptPackage(script)
 
-    def updateScriptPackage(self, script):
+    @staticmethod
+    def updateScriptPackage(script):
         sep = "\\" if "\\" in script.targetDistPath else "/"
         files = FileUtil.list(script.targetDistPath)
         for file in files:

@@ -77,15 +77,12 @@ class BuildConfig:
         return dependenciesStr + "\r\n\r\n"
 
     @staticmethod
-    def updateScript(folder, config, script):
+    def updateScript(folder, script):
         sep = "\\" if "\\" in folder else "/"
         files = FileUtil.list(folder)
         for file in files:
-            srcPath = folder + sep + file
-            if FileUtil.isFolder(srcPath):
-                BuildConfig.updateScript(srcPath, config, script)
-                continue
             if ".yaml" in file: continue
+            srcPath = folder + sep + file
             desPath = srcPath.replace(
                 script.targetLineProjectName,
                 script.scriptLineProjectName

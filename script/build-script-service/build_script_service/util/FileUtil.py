@@ -11,7 +11,7 @@ class FileUtil:
         launch_path = FileUtil.dirname(__file__)
         app_dir = FileUtil.dirname(launch_path)
         if is_prod:
-            if "site-packages" not in app_dir:
+            if "site-packages" in app_dir:
                 return app_dir
             else:
                 return FileUtil.dirname(app_dir)

@@ -3,8 +3,6 @@ import re
 import sys
 
 import yaml
-from script_py.pojo.dto.Log import Log
-from script_py.util.LogUtil import LogUtil
 
 from .FileUtil import FileUtil
 
