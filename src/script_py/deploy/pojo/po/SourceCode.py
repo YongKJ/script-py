@@ -64,7 +64,7 @@ class SourceCode:
             name, path, pycPath, cachePycPath, targetPath, SourceCode.analyzePath(targetPath, "pyc"),
             scriptPath, SourceCode.analyzePath(scriptPath, "pyc"), content, className,
             SourceCode.analyzeInternalImports(path, content),
-            SourceCode.analyzeExternalModules(path, content)
+            SourceCode.analyzeExternalModules(content)
         )
 
     @staticmethod
@@ -93,15 +93,22 @@ class SourceCode:
         return number
 
     @staticmethod
-    def analyzeExternalModules(path, content):
+    def analyzeExternalModules(content):
         modules = set()
         props = DataUtil.getProps(Modules)
-        pattern = re.compile("\nimport\\s(\\S*)")
+        pattern = re.compile("\\s?import\\s(\\S*)\\s")
         for match in pattern.finditer(content):
             key = match.group(1)
-            if not GenUtil.has(props, key): continue
+            if not GenUtil.has(props, key, True): continue
             modules.add(DataUtil.getValue(Modules, key))
+        SourceCode.analyzeExternalOptionalModules(content, modules)
         return modules
+
+    @staticmethod
+    def analyzeExternalOptionalModules(content, modules):
+        if "excel" in content:
+            modules.add(DataUtil.getValue(Modules, "xlrd"))
+
 
     @staticmethod
     def analyzePath(path, type):

@@ -46,9 +46,12 @@ class GenUtil:
         return name[0:1].upper() + re.sub("-(\\w)", lambda m: m.group(1).upper(), name[1:])
 
     @staticmethod
-    def has(list, e):
+    def has(list, e, turn=False):
         for l in list:
-            if e in l: return True
+            if turn and l in e:
+                return True
+            if not turn and e in l:
+                return True
         return False
 
     @staticmethod

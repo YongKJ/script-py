@@ -7,7 +7,11 @@ class DataUtil:
     @staticmethod
     def getValue(clazz, key):
         try:
-            return getattr(clazz, key)
+            props = DataUtil.getProps(clazz)
+            for prop in props:
+                if prop in key:
+                    return getattr(clazz, prop)
+            return None
         except Exception as e:
             print(key)
             print(e)
