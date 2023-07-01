@@ -9,8 +9,11 @@ name = "aliyun"
 url = "https://mirrors.aliyun.com/pypi/simple/"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.1"
 PyYAML = "^6.0"
+plotly = "^5.15.0"
+pandas = "1.1.5"
+xlrd = "1.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
