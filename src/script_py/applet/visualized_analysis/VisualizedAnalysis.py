@@ -35,4 +35,9 @@ class VisualizedAnalysis:
 
     @staticmethod
     def run():
-        VisualizedAnalysis().apply()
+        try:
+            VisualizedAnalysis().apply()
+            GenUtil.println("HTML 文件导出成功！")
+        except Exception as e:
+            GenUtil.println("HTML 文件导出失败！")
+            GenUtil.print(e)
