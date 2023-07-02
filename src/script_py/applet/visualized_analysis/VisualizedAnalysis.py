@@ -41,8 +41,8 @@ class VisualizedAnalysis:
 
         # linePlot.update_xaxes(gridcolor="rgb(238,238,238)", showspikes=True, spikesnap="cursor")
         # linePlot.update_yaxes(gridcolor="rgb(238,238,238)", showspikes=True, spikesnap="cursor")
-        linePlot.update_xaxes(gridcolor="rgb(238,238,238)", spikesnap="cursor")
-        linePlot.update_yaxes(gridcolor="rgb(238,238,238)", spikesnap="cursor")
+        linePlot.update_xaxes(gridcolor="rgb(238,238,238)")
+        linePlot.update_yaxes(gridcolor="rgb(238,238,238)")
         linePlot.update_traces(hovertemplate="%{y}")
         linePlot.update_layout(
             hoverlabel_font_color="white",
