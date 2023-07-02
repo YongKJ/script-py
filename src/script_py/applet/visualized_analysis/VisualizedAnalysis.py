@@ -1,7 +1,6 @@
 import pandas as Pandas
 import plotly.offline as Plot
 import plotly.express as BrushPlot
-import plotly.graph_objs as GraphPlot
 
 from ...util.GenUtil import GenUtil
 from ...util.FileUtil import FileUtil
@@ -42,8 +41,8 @@ class VisualizedAnalysis:
 
         # linePlot.update_xaxes(gridcolor="rgb(238,238,238)", showspikes=True, spikesnap="cursor")
         # linePlot.update_yaxes(gridcolor="rgb(238,238,238)", showspikes=True, spikesnap="cursor")
-        linePlot.update_xaxes(gridcolor="rgb(238,238,238)", showspikes=True)
-        linePlot.update_yaxes(gridcolor="rgb(238,238,238)", showspikes=True)
+        linePlot.update_xaxes(gridcolor="rgb(238,238,238)", spikesnap="cursor")
+        linePlot.update_yaxes(gridcolor="rgb(238,238,238)", spikesnap="cursor")
         linePlot.update_traces(hovertemplate="%{y}")
         linePlot.update_layout(
             hoverlabel_font_color="white",
@@ -57,7 +56,10 @@ class VisualizedAnalysis:
 
         FileUtil.mkdir(self.outPath)
         fileName = self.outPath + "epoch-data.html"
-        Plot.plot(linePlot, filename=fileName, auto_open=False)
+        Plot.plot(
+            linePlot, filename=fileName, auto_open=False,
+            config={"modeBarButtonsToAdd": ["toggleSpikelines"]}
+        )
 
     @staticmethod
     def run():
