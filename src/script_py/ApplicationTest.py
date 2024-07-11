@@ -8,7 +8,7 @@ class ApplicationTest:
 
     @staticmethod
     def run():
-        VisualizedAnalysis.run()
+        # VisualizedAnalysis.run()
         # TimeTest.run()
         # BuildScriptService.run()
-        # Demo.run()
+        Demo.run()

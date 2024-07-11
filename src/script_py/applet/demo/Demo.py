@@ -1,6 +1,9 @@
+import base64
 import re
 import os
 import sys
+
+import lzstring
 
 from ...pojo.dto.Log import Log
 from ...pojo.po.Modules import Modules
@@ -179,10 +182,32 @@ class Demo:
     def test21(self):
         LogUtil.loggerLine(Log.of("Demo", "test20", "__name__", Demo.__name__))
 
+    def test22(self):
+        content = "Hello world"
+
+        content_base64 = base64.b64encode(content.encode("utf-8")).decode("utf-8")
+        LogUtil.loggerLine(Log.of("Demo", "test21", "content_base64", content_base64))
+
+        content_base64 = base64.b64encode(content_base64.encode("utf-8")).decode("utf-8")
+        LogUtil.loggerLine(Log.of("Demo", "test21", "content_base64", content_base64))
+
+        compressed_str = lzstring.LZString.compressToEncodedURIComponent(content_base64)
+        LogUtil.loggerLine(Log.of("Demo", "test21", "compressed_str", compressed_str))
+
+        decompressed_str = lzstring.LZString.decompressFromEncodedURIComponent(compressed_str)
+        LogUtil.loggerLine(Log.of("Demo", "test21", "decompressed_str", decompressed_str))
+
+        message = base64.b64decode(decompressed_str).decode("utf-8")
+        LogUtil.loggerLine(Log.of("Demo", "test21", "message", message))
+
+        message = base64.b64decode(message).decode("utf-8")
+        LogUtil.loggerLine(Log.of("Demo", "test21", "message", message))
+
     @staticmethod
     def run():
         demo = Demo()
-        demo.test21()
+        demo.test22()
+        # demo.test21()
         # demo.test20()
         # demo.test19()
         # demo.test18()
