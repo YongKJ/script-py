@@ -129,11 +129,11 @@ class FileUtil:
         sep = "\r\n" if "\r\n" in content else "\n"
         contentArray = content.split(sep)
         pattern = re.compile(regStr)
-        for line in contentArray:
+        for i in range(0, len(contentArray)):
+            line = contentArray[i]
             match = pattern.match(line)
             if not match: continue
             replaceStr = valueFunc(match.group(1))
-            newLine = line.replace(match.group(1), replaceStr)
-            content = content.replace(line, newLine)
+            contentArray[i] = line.replace(match.group(1), replaceStr)
             if not isAll: break
-        FileUtil.write(path, content)
+        FileUtil.write(path, sep.join(contentArray))
