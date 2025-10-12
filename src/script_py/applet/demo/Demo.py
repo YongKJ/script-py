@@ -1,20 +1,20 @@
 import base64
-import re
 import os
+import re
 import sys
 
 import lzstring
 
+from ...deploy.pojo.dto.BuildConfig import BuildConfig
+from ...deploy.pojo.po.Dependency import Dependency
+from ...deploy.pojo.po.Script import Script
+from ...deploy.pojo.po.SourceCode import SourceCode
 from ...pojo.dto.Log import Log
 from ...pojo.po.Modules import Modules
+from ...util.DataUtil import DataUtil
 from ...util.FileUtil import FileUtil
 from ...util.GenUtil import GenUtil
 from ...util.LogUtil import LogUtil
-from ...util.DataUtil import DataUtil
-from ...deploy.pojo.po.Script import Script
-from ...deploy.pojo.po.SourceCode import SourceCode
-from ...deploy.pojo.po.Dependency import Dependency
-from ...deploy.pojo.dto.BuildConfig import BuildConfig
 
 
 class Demo:
@@ -77,7 +77,7 @@ class Demo:
 
     def test7(self):
         regStr = "(\r\n\\s+<dependency>[\\s\\S]*?</dependency>)"
-        path = "D:\Document\MyCodes\Github\script-java\pom.xml"
+        path = "D:\\Document\\MyCodes\\Github\\script-java\\pom.xml"
         value = "\r\n        <dependency>\r\n            <groupId>org.apache.httpcomponents</groupId>\r\n            <artifactId>httpclient</artifactId>\r\n            <version>4.5.49</version>\r\n        </dependency>"
         FileUtil.modFile(path, regStr, value)
         # FileUtil.modFile(path, regStr, value, True)

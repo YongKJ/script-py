@@ -1,7 +1,4 @@
-from .applet.visualized_analysis.VisualizedAnalysis import VisualizedAnalysis
-from .deploy.service.BuildScriptService import BuildScriptService
-from .applet.time_test.TimeTest import TimeTest
-from .applet.demo.Demo import Demo
+from .applet.irregular_str_match.IrregularStrMatch import IrregularStrMatch
 
 
 class ApplicationTest:
@@ -11,4 +8,5 @@ class ApplicationTest:
         # VisualizedAnalysis.run()
         # TimeTest.run()
         # BuildScriptService.run()
-        Demo.run()
+        # Demo.run()
+        IrregularStrMatch.run()
