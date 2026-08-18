@@ -18,9 +18,7 @@ lzstring = "^1.0.4"
 fuzzywuzzy = "^0.18.0"
 tqdm = "^4.67.1"
 python-levenshtein = "^0.27.1"
-
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
+openpyxl = "^3.1.5"
 
 [tool.poetry.scripts]
 script-py = "script_py.Application:Application.run"
@@ -28,3 +26,8 @@ script-py = "script_py.Application:Application.run"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=8.3.4,<9.0.0)"
+]

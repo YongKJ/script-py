@@ -1,4 +1,4 @@
-from .applet.irregular_str_match.IrregularStrMatch import IrregularStrMatch
+from .applet.excel_export_test.ExcelExportTest import ExcelExportTest
 
 
 class ApplicationTest:
@@ -9,4 +9,5 @@ class ApplicationTest:
         # TimeTest.run()
         # BuildScriptService.run()
         # Demo.run()
-        IrregularStrMatch.run()
+        # IrregularStrMatch.run()
+        ExcelExportTest.run()
